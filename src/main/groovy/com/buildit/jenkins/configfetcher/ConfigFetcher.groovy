@@ -177,7 +177,7 @@ class ConfigFetcher {
         if(System.getenv("JENKINS_CONFIG_GIT_VERIFY_SSL") && System.getenv("JENKINS_CONFIG_GIT_VERIFY_SSL")=="false"){
             options = "${options} http.sslVerify=false"
         }
-        String command = "git ${options.length() > 0 ? '-c ' + options : ''} clone -b ${branch} ${url} ${destDir}"
+        String command = "export GIT_CURL_VERBOSE=1 && git ${options.length() > 0 ? '-c ' + options : ''} clone -b ${branch} ${url} ${destDir}"
         logSafe("executing command: $command", [username, password, urlEncode(username), urlEncode(password)])
         execute(command, false)
         return walk(destDir as String)
